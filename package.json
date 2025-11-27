@@ -1,0 +1,94 @@
+{
+  "name": "@kubiya/control-plane-mcp-server",
+  "version": "1.0.0",
+  "description": "Production-ready MCP server for Kubiya Agent Control Plane API with 17 tools, 3 resources, real-time streaming, and enhanced error handling",
+  "type": "module",
+  "bin": {
+    "kubiya-mcp": "./build/index.js"
+  },
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.js"
+    }
+  },
+  "files": [
+    "build/**/*",
+    "config/**/*",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "start": "node build/index.js",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:e2e": "vitest run tests/e2e",
+    "test:coverage": "vitest run --coverage",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run type-check && npm run build",
+    "inspect": "npx @modelcontextprotocol/inspector node build/index.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "kubiya",
+    "agent",
+    "control-plane",
+    "ai",
+    "llm",
+    "ai-agents",
+    "workflow-automation",
+    "devops",
+    "streaming",
+    "real-time",
+    "typescript"
+  ],
+  "author": {
+    "name": "Kubiya",
+    "email": "support@kubiya.ai",
+    "url": "https://kubiya.ai"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kubiyabot/kubiya-mcp-server.git"
+  },
+  "homepage": "https://github.com/kubiyabot/kubiya-mcp-server#readme",
+  "bugs": {
+    "url": "https://github.com/kubiyabot/kubiya-mcp-server/issues"
+  },
+  "license": "AGPL-3.0",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "@types/eventsource": "^1.1.15",
+    "axios": "^1.7.9",
+    "eventsource": "^4.1.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@typescript-eslint/eslint-plugin": "^8.19.1",
+    "@typescript-eslint/parser": "^8.19.1",
+    "@vitest/coverage-v8": "^2.1.8",
+    "eslint": "^9.17.0",
+    "msw": "^2.7.0",
+    "prettier": "^3.4.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

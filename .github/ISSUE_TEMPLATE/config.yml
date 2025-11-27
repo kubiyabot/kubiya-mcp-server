@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Kubiya Documentation
+    url: https://docs.kubiya.ai
+    about: Check our documentation for help and guides
+  - name: Kubiya Support
+    url: mailto:support@kubiya.ai
+    about: Contact our support team directly
+  - name: Community Discussions
+    url: https://github.com/kubiyabot/kubiya-mcp-server/discussions
+    about: Ask questions and discuss ideas with the community

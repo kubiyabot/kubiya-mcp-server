@@ -1,0 +1,58 @@
+# Source files (only ship built files)
+src/
+tests/
+*.ts
+!*.d.ts
+
+# Development files
+.github/
+.vscode/
+*.log
+*.tsbuildinfo
+coverage/
+.nyc_output/
+*.test.ts
+*.spec.ts
+test-*.mjs
+test-*.js
+
+# Config files
+.eslintrc*
+.prettierrc*
+tsconfig.json
+vitest.config.ts
+.editorconfig
+
+# Environment
+.env
+.env.*
+
+# Docs (keep README.md, LICENSE, CHANGELOG.md)
+docs/
+*.md
+!README.md
+!LICENSE
+!CHANGELOG.md
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# CI/CD
+.travis.yml
+.gitlab-ci.yml
+azure-pipelines.yml
+circle.yml
+
+# Misc
+tmp/
+temp/
+node_modules/

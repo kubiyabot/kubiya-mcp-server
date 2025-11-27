@@ -1,0 +1,12 @@
+{
+  "apiBaseUrl": "https://control-plane.kubiya.ai",
+  "timeout": 60000,
+  "retryAttempts": 3,
+  "retryDelay": 2000,
+  "logLevel": "info",
+  "allowedTools": [
+    "list_*",
+    "get_*",
+    "health_check"
+  ]
+}

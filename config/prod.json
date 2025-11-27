@@ -1,0 +1,7 @@
+{
+  "apiBaseUrl": "https://control-plane.kubiya.ai",
+  "timeout": 60000,
+  "retryAttempts": 3,
+  "retryDelay": 2000,
+  "logLevel": "warn"
+}

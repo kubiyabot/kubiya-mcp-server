@@ -1,0 +1,7 @@
+{
+  "apiBaseUrl": "http://localhost:8000",
+  "timeout": 30000,
+  "retryAttempts": 2,
+  "retryDelay": 1000,
+  "logLevel": "debug"
+}
