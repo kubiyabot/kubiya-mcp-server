@@ -8,8 +8,8 @@ A production-ready [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 
 ## 🚀 Features
 
-- ✅ **17 MCP Tools** - Complete API coverage for agents, teams, workflows, executions, and system operations
-- ✅ **3 MCP Resources** - Dynamic context injection (agents, teams, worker queues)
+- ✅ **54 MCP Tools** - Complete CRUD coverage for agents, teams, environments, projects, skills, worker queues, policies, jobs, workflows, executions, and system operations
+- ✅ **8 MCP Resources** - Dynamic context injection (agents, teams, worker queues, environments, projects, skills, policies, jobs)
 - ✅ **Real-time Streaming** - SSE-based execution monitoring with auto-reconnection
 - ✅ **Enhanced Error Handling** - 6 custom error classes with user-friendly hints
 - ✅ **Multi-Profile Configuration** - Dev, staging, and prod environment support
@@ -131,9 +131,9 @@ const result = await client.callTool({
 
 ## 📚 API Reference
 
-### Tools (17 total)
+### Tools (54 total)
 
-#### Agents (4 tools)
+#### Agents (6 tools)
 
 - **`list_agents`** - List all agents with pagination
   ```json
@@ -142,7 +142,7 @@ const result = await client.callTool({
 
 - **`get_agent`** - Get agent details by ID
   ```json
-  { "agent_id": "uuid" }
+  { "id": "uuid" }
   ```
 
 - **`create_agent`** - Create new agent with configuration
@@ -150,8 +150,25 @@ const result = await client.callTool({
   {
     "name": "My Agent",
     "description": "Agent description",
-    "runner": { /* config */ }
+    "instructions": "You are a helpful assistant...",
+    "model": "gpt-4",
+    "project_ids": ["project-uuid"],
+    "environment_ids": ["env-uuid"]
   }
+  ```
+
+- **`update_agent`** - Update existing agent configuration
+  ```json
+  {
+    "id": "uuid",
+    "name": "Updated Agent Name",
+    "description": "Updated description"
+  }
+  ```
+
+- **`delete_agent`** - Delete an agent by ID
+  ```json
+  { "id": "uuid" }
   ```
 
 - **`execute_agent`** - Execute agent with prompt
@@ -159,15 +176,140 @@ const result = await client.callTool({
   {
     "agent_id": "uuid",
     "prompt": "What is the weather?",
-    "worker_queue_id": "optional-queue-id"
+    "environment_id": "optional-env-id"
   }
   ```
 
-#### Teams (3 tools)
+#### Teams (6 tools)
 
-- **`list_teams`** - List all teams
+- **`list_teams`** - List all teams with pagination
 - **`get_team`** - Get team details by ID
+- **`create_team`** - Create a new team
+  ```json
+  {
+    "name": "My Team",
+    "description": "Team description",
+    "runtime": "default",
+    "skill_ids": ["skill-uuid"]
+  }
+  ```
+- **`update_team`** - Update team configuration
+- **`delete_team`** - Delete a team by ID
 - **`execute_team`** - Execute team with prompt
+
+#### Environments (5 tools)
+
+- **`list_environments`** - List all environments
+  ```json
+  { "status_filter": "active" }
+  ```
+- **`get_environment`** - Get environment details by ID
+- **`create_environment`** - Create a new environment
+  ```json
+  {
+    "name": "production",
+    "display_name": "Production Environment",
+    "description": "Production deployment environment",
+    "tags": ["prod", "main"]
+  }
+  ```
+- **`update_environment`** - Update environment configuration
+- **`delete_environment`** - Delete an environment by ID
+
+#### Projects (5 tools)
+
+- **`list_projects`** - List all projects
+- **`get_project`** - Get project details by ID
+- **`create_project`** - Create a new project
+  ```json
+  {
+    "name": "My Project",
+    "key": "MYPROJ",
+    "description": "Project description",
+    "visibility": "private"
+  }
+  ```
+- **`update_project`** - Update project configuration
+- **`delete_project`** - Delete a project by ID
+
+#### Skills (5 tools)
+
+- **`list_skills`** - List all skills (toolsets)
+- **`get_skill`** - Get skill details by ID
+- **`create_skill`** - Create a new skill
+  ```json
+  {
+    "name": "File System Access",
+    "type": "file_system",
+    "description": "Allows file operations",
+    "enabled": true
+  }
+  ```
+- **`update_skill`** - Update skill configuration
+- **`delete_skill`** - Delete a skill by ID
+
+#### Worker Queues (5 tools)
+
+- **`list_worker_queues`** - List all worker queues
+- **`get_worker_queue`** - Get worker queue details by ID
+- **`create_worker_queue`** - Create a new worker queue
+  ```json
+  {
+    "environment_id": "env-uuid",
+    "name": "default-queue",
+    "display_name": "Default Queue",
+    "max_workers": 10,
+    "heartbeat_interval": 60
+  }
+  ```
+- **`update_worker_queue`** - Update worker queue configuration
+- **`delete_worker_queue`** - Delete a worker queue by ID
+
+#### Policies (5 tools)
+
+- **`list_policies`** - List all OPA policies
+  ```json
+  { "page": 1, "limit": 20, "enabled": true }
+  ```
+- **`get_policy`** - Get policy details by ID
+- **`create_policy`** - Create a new OPA policy
+  ```json
+  {
+    "name": "Access Control Policy",
+    "policy_content": "package kubiya.access...",
+    "description": "Controls access to resources",
+    "enabled": true,
+    "tags": ["security", "access"]
+  }
+  ```
+- **`update_policy`** - Update policy configuration
+- **`delete_policy`** - Delete a policy by ID
+
+#### Jobs (6 tools)
+
+- **`list_jobs`** - List all scheduled jobs
+  ```json
+  { "enabled": true, "trigger_type": "cron" }
+  ```
+- **`get_job`** - Get job details by ID
+- **`create_job`** - Create a new scheduled job
+  ```json
+  {
+    "name": "Daily Report",
+    "trigger_type": "cron",
+    "cron_schedule": "0 9 * * *",
+    "cron_timezone": "America/New_York",
+    "planning_mode": "predefined_agent",
+    "entity_id": "agent-uuid",
+    "prompt_template": "Generate daily report for {{date}}"
+  }
+  ```
+- **`update_job`** - Update job configuration
+- **`delete_job`** - Delete a job by ID
+- **`trigger_job`** - Manually trigger a job execution
+  ```json
+  { "id": "job-uuid", "variables": { "date": "2025-01-01" } }
+  ```
 
 #### Executions (5 tools)
 
@@ -212,7 +354,7 @@ const result = await client.callTool({
 - **`health_check`** - Check API health status
 - **`list_models`** - List available LLM models
 
-### Resources (3 total)
+### Resources (8 total)
 
 Resources provide dynamic context data that helps LLMs make informed decisions:
 
@@ -221,21 +363,56 @@ Lists all agents with configurations, skills, and capabilities.
 
 **Response includes**: agent ID, name, description, image, runner config, secrets, environment variables, integrations
 
-**Usage**: Reference agent IDs when calling `execute_agent`
+**Usage**: Reference agent IDs when calling `execute_agent`, `update_agent`, or `delete_agent`
 
 #### `teams://list` - Available Teams
 Lists all teams with members, skills, and configurations.
 
 **Response includes**: team ID, name, description, members, skills, runner config, communication settings
 
-**Usage**: Reference team IDs when calling `execute_team`
+**Usage**: Reference team IDs when calling `execute_team`, `update_team`, or `delete_team`
 
 #### `worker-queues://list` - Available Worker Queues
 Lists all worker queues with status and active workers.
 
 **Response includes**: queue ID, name, environment, status, active workers, max workers, heartbeat interval
 
-**Usage**: Reference queue IDs when executing agents/teams with `worker_queue_id` parameter
+**Usage**: Reference queue IDs when creating worker queues or executing agents/teams
+
+#### `environments://list` - Available Environments
+Lists all environments with their configurations.
+
+**Response includes**: environment ID, name, display name, description, status
+
+**Usage**: Reference environment IDs when creating agents, teams, or worker queues
+
+#### `projects://list` - Available Projects
+Lists all projects with their configurations.
+
+**Response includes**: project ID, name, key, description, status
+
+**Usage**: Reference project IDs when creating or updating agents
+
+#### `skills://list` - Available Skills
+Lists all skills (toolsets) with their configurations.
+
+**Response includes**: skill ID, name, type, description, enabled status
+
+**Usage**: Reference skill IDs when creating or updating agents and teams
+
+#### `policies://list` - Available Policies
+Lists all OPA policies for access control.
+
+**Response includes**: policy ID, name, description, policy type
+
+**Usage**: Reference policy IDs when creating or updating projects and agents
+
+#### `jobs://list` - Available Jobs
+Lists all scheduled jobs with their configurations.
+
+**Response includes**: job ID, name, description, entity type, trigger type, schedule, status
+
+**Usage**: Reference job IDs when triggering, updating, or managing jobs
 
 **Why Resources?**
 - Provides context for tool parameters (which agent ID to use, which queue to assign)
@@ -537,7 +714,12 @@ ControlPlaneClient
 ├── workflows: WorkflowService
 ├── executions: ExecutionService
 ├── system: SystemService
-└── workerQueues: WorkerQueuesService
+├── workerQueues: WorkerQueuesService
+├── environments: EnvironmentService
+├── projects: ProjectService
+├── skills: SkillService
+├── policies: PolicyService
+└── jobs: JobService
     └── BaseClient (retry logic, error handling)
 ```
 
