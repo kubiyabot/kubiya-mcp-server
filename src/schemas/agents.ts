@@ -32,6 +32,10 @@ export const UpdateAgentSchema = z.object({
   runner_name: z.string().optional(),
 });
 
+export const DeleteAgentSchema = z.object({
+  id: z.string().min(1, 'Agent ID is required'),
+});
+
 export const ExecuteAgentSchema = z.object({
   agent_id: z.string().min(1, 'Agent ID is required'),
   prompt: z.string().min(1, 'Prompt is required'),

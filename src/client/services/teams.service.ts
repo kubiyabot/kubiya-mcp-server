@@ -25,6 +25,10 @@ export class TeamService {
     return this.client.patch<Team>(`/api/v1/teams/${id}`, data);
   }
 
+  async delete(id: string): Promise<void> {
+    await this.client.delete(`/api/v1/teams/${id}`);
+  }
+
   async execute(id: string, data: any): Promise<any> {
     return this.client.post(`/api/v1/teams/${id}/execute`, data);
   }

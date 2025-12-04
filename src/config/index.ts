@@ -39,7 +39,7 @@ export function loadConfig(): ServerConfig {
     const configContent = readFileSync(configPath, 'utf-8');
     fileConfig = JSON.parse(configContent);
     logger.debug(`Loaded configuration from ${configPath}`);
-  } catch (error) {
+  } catch {
     // Config file is optional, continue with defaults
     logger.debug(`No config file found for profile ${profileName}, using defaults`);
   }

@@ -28,12 +28,25 @@ import * as executionTools from './tools/executions/index.js';
 import * as workflowTools from './tools/workflows/index.js';
 import * as systemTools from './tools/system/index.js';
 
+// Import Phase 2 tools - CRUD for all resources
+import * as environmentTools from './tools/environments/index.js';
+import * as projectTools from './tools/projects/index.js';
+import * as skillTools from './tools/skills/index.js';
+import * as workerQueueTools from './tools/worker-queues/index.js';
+import * as policyTools from './tools/policies/index.js';
+import * as jobTools from './tools/jobs/index.js';
+
 // Import resources
 import {
   resourceRegistry,
   agentsListResource,
   teamsListResource,
   workerQueuesListResource,
+  environmentsListResource,
+  projectsListResource,
+  skillsListResource,
+  policiesListResource,
+  jobsListResource,
 } from './resources/index.js';
 
 const log = logger;
@@ -98,6 +111,14 @@ async function main() {
   registry.registerAll(Object.values(workflowTools));
   registry.registerAll(Object.values(systemTools));
 
+  // Register Phase 2 tools - CRUD for all resources
+  registry.registerAll(Object.values(environmentTools));
+  registry.registerAll(Object.values(projectTools));
+  registry.registerAll(Object.values(skillTools));
+  registry.registerAll(Object.values(workerQueueTools));
+  registry.registerAll(Object.values(policyTools));
+  registry.registerAll(Object.values(jobTools));
+
   const registeredCount = registry.count();
   const allowedToolsStr = config.allowedTools.join(', ');
 
@@ -109,6 +130,11 @@ async function main() {
     agentsListResource,
     teamsListResource,
     workerQueuesListResource,
+    environmentsListResource,
+    projectsListResource,
+    skillsListResource,
+    policiesListResource,
+    jobsListResource,
   ]);
 
   log.info(`✅ Registered ${resourceRegistry.size} resources for context injection`);
