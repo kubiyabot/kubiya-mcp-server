@@ -167,22 +167,24 @@ export class BaseClient {
       case 403:
         throw new ForbiddenError(message + contextMsg);
 
-      case 404:
+      case 404: {
         // Try to extract resource type from URL for better error message
         const resourceMatch = url.match(/\/api\/v\d+\/(\w+)\//);
         const resource = resourceMatch ? resourceMatch[1] : 'Resource';
         const idMatch = url.match(/\/([a-f0-9-]+)(?:\/|$)/);
         const id = idMatch ? idMatch[1] : 'unknown';
         throw new NotFoundError(resource, id);
+      }
 
       case 409:
         throw new ConflictError(message + contextMsg, details);
 
-      case 429:
+      case 429: {
         // Extract retry-after header if available
         const retryAfter = error.response?.headers?.['retry-after'];
         const retryAfterSeconds = retryAfter ? parseInt(retryAfter, 10) : undefined;
         throw new RateLimitError(message + contextMsg, retryAfterSeconds);
+      }
 
       case 408:
       case 504:

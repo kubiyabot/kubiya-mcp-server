@@ -66,8 +66,96 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- Additional tools for remaining API endpoints
 - Unit test coverage (70%+)
 - E2E MCP protocol tests
 - Performance optimizations
 - CI/CD pipeline
+
+## [1.1.0] - 2025-12-04
+
+### Added
+
+#### Full CRUD Support for All Resources
+- **37 new MCP tools** bringing total to 54 tools across 11 categories
+- Complete Create, Read, Update, Delete operations for all resource types
+
+#### New Tools by Category
+
+**Agents** (2 new tools)
+- `update_agent` - Update existing agent configuration
+- `delete_agent` - Delete an agent by ID
+
+**Teams** (3 new tools)
+- `create_team` - Create a new team with configuration and member agents
+- `update_team` - Update team configuration
+- `delete_team` - Delete a team by ID
+
+**Environments** (5 new tools)
+- `list_environments` - List all environments in the organization
+- `get_environment` - Get environment details by ID
+- `create_environment` - Create a new environment
+- `update_environment` - Update environment configuration
+- `delete_environment` - Delete an environment by ID
+
+**Projects** (5 new tools)
+- `list_projects` - List all projects in the organization
+- `get_project` - Get project details by ID
+- `create_project` - Create a new project
+- `update_project` - Update project configuration
+- `delete_project` - Delete a project by ID
+
+**Skills** (5 new tools)
+- `list_skills` - List all skills (toolsets)
+- `get_skill` - Get skill details by ID
+- `create_skill` - Create a new skill
+- `update_skill` - Update skill configuration
+- `delete_skill` - Delete a skill by ID
+
+**Worker Queues** (5 new tools)
+- `list_worker_queues` - List all worker queues
+- `get_worker_queue` - Get worker queue details by ID
+- `create_worker_queue` - Create a new worker queue in an environment
+- `update_worker_queue` - Update worker queue configuration
+- `delete_worker_queue` - Delete a worker queue by ID
+
+**Policies** (5 new tools)
+- `list_policies` - List all OPA policies
+- `get_policy` - Get policy details by ID
+- `create_policy` - Create a new OPA policy
+- `update_policy` - Update policy configuration
+- `delete_policy` - Delete a policy by ID
+
+**Jobs** (6 new tools)
+- `list_jobs` - List all scheduled jobs
+- `get_job` - Get job details by ID
+- `create_job` - Create a new scheduled job (cron, webhook, or manual trigger)
+- `update_job` - Update job configuration
+- `delete_job` - Delete a job by ID
+- `trigger_job` - Manually trigger a job execution
+
+#### New Resources (5 new resources)
+- `environments://list` - Available environments with configurations
+- `projects://list` - Available projects with configurations
+- `skills://list` - Available skills (toolsets) with configurations
+- `policies://list` - Available OPA policies for access control
+- `jobs://list` - Available scheduled jobs with configurations
+
+#### New Services
+- `EnvironmentService` - API client for environment operations
+- `ProjectService` - API client for project operations
+- `SkillService` - API client for skill/toolset operations
+- `PolicyService` - API client for OPA policy operations
+- `JobService` - API client for scheduled job operations (including trigger, enable, disable)
+
+#### New Validation Schemas
+- Environment schemas (list, get, create, update, delete)
+- Project schemas (list, get, create, update, delete)
+- Skill schemas (list, get, create, update, delete)
+- Policy schemas (list, get, create, update, delete)
+- Job schemas (list, get, create, update, delete, trigger)
+- Worker Queue schemas (list, get, create, update, delete)
+
+### Changed
+- Updated `WorkerQueuesService` with create, update, delete, and listByEnvironment methods
+- Updated `TeamService` with delete method
+- Updated tool counts in documentation (17 → 54 tools, 3 → 8 resources)
