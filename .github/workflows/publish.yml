@@ -29,6 +29,13 @@ jobs:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
 
+      - name: Configure NPM
+        run: |
+          npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
+          npm config set username kubiya
+          npm config set email it@kubiya.ai
+          npm config list
+
       - name: Install dependencies
         run: npm ci
 
@@ -64,10 +71,11 @@ jobs:
         run: npm test
         continue-on-error: true
 
-      - name: Configure NPM authentication
+      - name: Verify NPM authentication
         run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+          echo "Verifying authentication..."
           npm whoami
+          echo "✓ Authenticated as: $(npm whoami)"
 
       - name: Publish to NPM
         run: npm publish --provenance --access public
