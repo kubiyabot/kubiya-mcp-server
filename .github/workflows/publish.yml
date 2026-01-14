@@ -28,7 +28,6 @@ jobs:
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
-          scope: '@kubiya'
 
       - name: Install dependencies
         run: npm ci
@@ -63,7 +62,12 @@ jobs:
 
       - name: Run tests
         run: npm test
-        continue-on-error: true  # Don't fail publish if tests fail, adjust as needed
+        continue-on-error: true
+
+      - name: Verify NPM authentication
+        run: npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to NPM
         run: npm publish --provenance --access public
